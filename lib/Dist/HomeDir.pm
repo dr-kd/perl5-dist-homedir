@@ -7,6 +7,15 @@ use Path::Tiny;
 
 my $home;
 
+sub import {
+    my ($pkg, %libs) = @_;
+    my $libs = $libs{lib};
+    require lib;
+    my $home = dist_home();
+    $_ = $home->child($_)->stringify for @$libs;
+    lib->import(@$libs);
+}
+
 sub dist_home {
     return $home if $home;
     my $cwd = path((caller)[1])->parent;
@@ -38,13 +47,19 @@ Dist::HomeDir
 
 =head2 SUMMARY
 
-    use Dist::Homedir;
+    use Dist::HomeDir;
     my $dist_home = Dist::Homedir::dist_home(); # A Path::Tiny object of the Dist home
+
+    use Dist::HomeDir lib => [qw( script/lib t/lib )];
+    # @INC now contains $dist_home->child('script/lib') and t/lib
 
 Easily find the dist homedir for an application set up as a cpan(ish)
 distribution but intended to be deployed via git checkout or by a tarball
-in a self contained directory.  DO NOT use this in code that is B<ever>
-likely to be installed via cpan or other package manager.
+in a self contained directory.  You can also optionally modify @INC as
+documented above.
+
+DO NOT use this in code that is B<ever> likely to be installed via cpan
+or other package manager.
 
 =head2 DESCRIPTION
 
@@ -58,10 +73,16 @@ B<never> be used in code that will be instaled via a cpan client or other
 package manager.
 
 Sometimes support libaries will also live in the C<t/lib> directory and the
-C<script/lib> directory.  C< dist_home > will ignore C< lib > directories
+C<script/lib> directory.  C< dist_home > will ignore these C< lib > directories
 as part of finding the distribution root.  Future versions of this module
-may make the list of what directories to ignore C< lib > sub directories
+may make the list of what directories to ignore other C< lib > sub directories
 user-configurable (patches welcome).
+
+If you want to modify C<@INC> with the import syntax in the second example
+in the summary, be careful.  In particular if you use L< Dist::HomeDir> in
+test files and in code to be used in production, C<@INC> might be modified in
+unexpeted ways depending on the structure of your codebase.
+
 
 =head2 FUNCTIONS
 
@@ -69,5 +90,22 @@ dist_home
 
 Returns a L<Path::Tiny> object of where the current code file executed
 thinks the distribution home directory is.
+
+
+=head2 ALTERNATIVES
+
+L<Mojo::Home> - lots of features, no non-core perl dependencies
+
+L<FindBin>    - perl core, comes with gotchas if called multiple times.
+
+L<Test::InDistDir> - where the import syntax for L<Dist::HomeDir> came from.
+
+=head2 AUTHOR
+
+Kieren Diment <zarquon@cpan.org>
+
+=head2 COPYRIGHT
+
+This code can be distributed under the same terms as perl itself.
 
 =cut
