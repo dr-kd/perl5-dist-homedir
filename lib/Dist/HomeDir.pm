@@ -70,20 +70,20 @@ or other package manager.
 This module was inspired by Catalyst::Utils->home() to obtain the root
 directory for obtaining application code and self-contained support data in
 directories relative to the distribution root.  It does this by returning a
-L< Path::Tiny > object which has a very nice interface.  However
+L<Path::Tiny> object which has a very nice interface.  However
 Catalyst::Utils->home only works for perl classes.  This works for class
-files and perl scripts via examining C< (caller)[1] > and thus should
+files and perl scripts via examining C<(caller)[1]> and thus should
 B<never> be used in code that will be instaled via a cpan client or other
 package manager.
 
 Sometimes support libaries will also live in the C<t/lib> directory and the
-C<script/lib> directory.  C< dist_home > will ignore these C< lib > directories
+C<script/lib> directory.  C<dist_home> will ignore these C<lib> directories
 as part of finding the distribution root.  Future versions of this module
-may make the list of what directories to ignore other C< lib > sub directories
+may make the list of what directories to ignore other C<lib> sub directories
 user-configurable (patches welcome).
 
 If you want to modify C<@INC> with the import syntax in the second example
-in the summary, be careful.  In particular if you use L< Dist::HomeDir> in
+in the summary, be careful.  In particular if you use L<Dist::HomeDir> in
 test files and in code to be used in production, C<@INC> might be modified in
 unexpeted ways depending on the structure of your codebase.
 
