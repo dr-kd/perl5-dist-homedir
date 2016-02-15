@@ -18,7 +18,11 @@ sub import {
 
 sub dist_home {
     return $home if $home;
-    my $cwd = path((caller)[1])->parent;
+    my $caller = [(caller)];
+    if ($caller->[0] eq 'Dist::HomeDir') {
+        $caller = [caller(2)];
+    }
+    my $cwd = path($caller->[1])->parent;
     $home = _get_dist_home($cwd);
     return $home->absolute;
 }
