@@ -45,11 +45,12 @@ sub _get_dist_home {
 }
 1;
 __END__
-=head2 NAME
 
-Dist::HomeDir
+=head1 NAME
 
-=head2 SUMMARY
+Dist::HomeDir - easily find the distribution home directory for code never intended to be installed via a package manager
+
+=head1 SUMMARY
 
     use Dist::HomeDir;
     my $dist_home = Dist::Homedir::dist_home(); # A Path::Tiny object of the Dist home
@@ -65,7 +66,7 @@ documented above.
 DO NOT use this in code that is B<ever> likely to be installed via cpan
 or other package manager.
 
-=head2 DESCRIPTION
+=head1 DESCRIPTION
 
 This module was inspired by Catalyst::Utils->home() to obtain the root
 directory for obtaining application code and self-contained support data in
@@ -83,23 +84,21 @@ may make the list of what directories to ignore other C<lib> sub directories
 user-configurable (patches welcome).
 
 If you want to modify C<@INC> with the import syntax in the second example
-<<<<<<< HEAD
-in the summary, be careful.  In particular if you use L< Dist::HomeDir> in
+in the summary, be careful.  In particular if you use L<Dist::HomeDir> in
 test files and in code to be used in production, C<@INC> might be modified
 in unexpeted ways depending on the structure of your codebase.  The best
 thing to do here is only use the import syntax in test files or maybe other
 support files (e.g. in C<script>), and never in code in the main package
 hierarchy.
 
-=head2 FUNCTIONS
+=head1 FUNCTIONS
 
-dist_home
+=head2 dist_home
 
 Returns a L<Path::Tiny> object of where the current code file executed
 thinks the distribution home directory is.
 
-
-=head2 ALTERNATIVES
+=head1 ALTERNATIVES
 
 L<Mojo::Home> - lots of features, no non-core perl dependencies
 
@@ -107,11 +106,11 @@ L<FindBin>    - perl core, comes with gotchas if called multiple times.
 
 L<Test::InDistDir> - where the import syntax for L<Dist::HomeDir> came from.
 
-=head2 AUTHOR
+=head1 AUTHOR
 
 Kieren Diment <zarquon@cpan.org>
 
-=head2 COPYRIGHT
+=head1 COPYRIGHT
 
 This code can be distributed under the same terms as perl itself.
 
