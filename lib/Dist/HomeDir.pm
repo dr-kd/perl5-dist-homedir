@@ -84,8 +84,11 @@ user-configurable (patches welcome).
 
 If you want to modify C<@INC> with the import syntax in the second example
 in the summary, be careful.  In particular if you use L< Dist::HomeDir> in
-test files and in code to be used in production, C<@INC> might be modified in
-unexpeted ways depending on the structure of your codebase.
+test files and in code to be used in production, C<@INC> might be modified
+in unexpeted ways depending on the structure of your codebase.  The best
+thing to do here is only use the import syntax in test files or maybe other
+support files (e.g. in C<script>), and never in code in the main package
+hierarchy.
 
 
 =head2 FUNCTIONS
